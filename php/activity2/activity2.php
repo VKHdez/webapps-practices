@@ -1,62 +1,47 @@
-<?php
-// Subject: "Aplicaciones Web" - Activity2
-// Team 3
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-/*
-    Create a class that stores a random numbers group (1...50)
-    - Get the Mean and Variance
-    - Count numbers 1's , 2's ... 50's
-    - Sort the array
-    - And show the results
-*/
+    <link rel="stylesheet" href="ac2-styles.css">
+    <title>Document</title>
+</head>
+<body>
 
-class Datos{
-    public $datos = [];
-    public $n;
+    <?php
 
-    // ------- MAIN Methods
+    include 'activity2class.php';
 
-    public function ordena(){
+    if(!empty($_POST['send']) && !empty($_POST['nvalue']) ){
 
+        if( preg_match('/[^0-9]/i', $_POST['nvalue']) == 0 ){
+
+            $data     = new Datos($_POST['nvalue']);
+
+            $data->fillArray();
+
+            if(isset($_POST['sortvalue'])){
+                $data->ordena();
+            }
+
+        }else{
+            echo "<div class='alert'>N no es tamaño válido</div>";   
+        } 
+
+    }else{
+        echo "<div class='alert'>Coloque un tamaño de arreglo válido...</div>";
     }
-
-    public function cuenta(){
-
-    }
-
-    public function medVar(){
-
-    }
-
-    public function muestra(){
-
-    }
-
-    // ------- Methods
-} // -----> END 'Datos' Class
+    ?>
 
 
-// MAIN CODE
+    <div class="result">
+        <strong>El valor de N es: <?php echo $data->n; ?> </strong> <br> <br>
 
-if(isset($_POST['send']) && !empty($_POST['nvalue']) && !empty($_POST['arrayvalue']) ){
-    echo "loggeado";
+        <strong>Cadena:</strong> <br> <br>
 
-    /*
-        TODO:
-            - Create 'Datos' instance
-            - Save data to that instance
-            - Validate only numbers in both inputs
-            - Implement sorting, count and medVar algorithm
-            - Show Resulst
-    */
-}else{
-
-    /*
-        TODO:
-            - Redrect to home page (index.html)
-    */
-
-    echo "err no";
-}
-
-?>
+        <p> <?php $data->muestra(); ?> </p>
+    </div>
+    
+</body>
+</html>
