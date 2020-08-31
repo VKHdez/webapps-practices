@@ -66,7 +66,7 @@
             $countArray = $data->cuenta( $data->datos );
 
 
-            for($i=0; $i<=$data->max; $i++){
+            for($i=0; $i<$data->max; $i++){
                 echo $i+1;
                 echo " --> [".$countArray[$i]."] . ";
 

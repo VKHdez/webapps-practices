@@ -50,7 +50,7 @@ class Datos{
 
     public function cuenta($array){
 
-        // print_r($array);
+        print_r($array);
 
         $aux = array(); // Create the counting array.
 
@@ -60,7 +60,7 @@ class Datos{
 
         // Count the array elements
         for($i=0; $i<$this->n; $i++){
-            $aux[ $array[$i] ]++; // Increase the Count value for each array[i] element 
+            $aux[ $array[$i]-1 ]++; // Increase the Count value for each array[i] element 
         }
         return $aux;
     }
