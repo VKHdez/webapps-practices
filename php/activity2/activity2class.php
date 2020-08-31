@@ -33,24 +33,37 @@ class Datos{
             $final[$i] = 0;
         }
 
+
+        // echo "<br> <br> <br>";
+        // print_r($aux);
+        // echo "<br> <br> <br>";
+
         // Initiate SUM process
-        for($i = 2; $i<=$this->max; $i++){
+        for($i = 1; $i<=$this->max; $i++){
             $aux[$i] = $aux[$i] + $aux[ ($i-1) ];
         }
 
         // Set final indexing positions
+
+        // print_r($aux);
+        // echo "<br> <br> <br> <br>";
         
-        for($i=0; $i<$this->n; $i++){            
-            $final[ $aux[ $this->datos[$i] ]-1 ] = $this->datos[$i];
+        for($i=0; $i<$this->n; $i++){
+
+            $final[ $aux[ ($this->datos[$i]) ] ] = $this->datos[$i];
             $aux[ $this->datos[$i]] --;
         }
+
+        // for($i=0;$i<$this->n;$i++){
+
+        // }
 
         $this->sorted = $final;
     }
 
     public function cuenta($array){
 
-        print_r($array);
+        //print_r($array);
 
         $aux = array(); // Create the counting array.
 
@@ -60,8 +73,9 @@ class Datos{
 
         // Count the array elements
         for($i=0; $i<$this->n; $i++){
-            $aux[ $array[$i]-1 ]++; // Increase the Count value for each array[i] element 
+            $aux[ $array[$i] ]++; // Increase the Count value for each array[i] element 
         }
+
         return $aux;
     }
 
