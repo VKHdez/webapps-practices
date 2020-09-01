@@ -66,8 +66,8 @@
             $countArray = $data->cuenta( $data->datos );
 
 
-            for($i=0; $i<$data->max; $i++){
-                echo $i+1;
+            for($i=0; $i<=$data->max; $i++){
+                echo $i;
                 echo " --> [".$countArray[$i]."] . ";
 
                 if( $i>0 && $i%10 == 0){
