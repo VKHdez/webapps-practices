@@ -12,6 +12,7 @@
     <?php
 
     include 'activity2class.php';
+    $max = 0;
 
     if(!empty($_POST['send']) && !empty($_POST['nvalue']) ){
 
@@ -19,13 +20,19 @@
 
             $data     = new Datos($_POST['nvalue']);
 
-            $data->fillArray();
+            // Find the Highest element in the array
+            for( $i=0; $i < $data->n; $i++){
 
-            if(isset($_POST['sortvalue'])){
-                $data->ordena();
+                if($data->datos[$i] > $max){
+                    $max = $data->datos[$i];
+                }
             }
 
-            $data->medVar();
+            if(isset($_POST['sortvalue'])){
+                $data->ordena($max);
+            }
+
+            // $data->medVar();
 
         }else{
             echo "<div class='alert'>N no es tamaño válido</div>";   
@@ -42,38 +49,23 @@
 
         <strong>Cadena:</strong> <br> <br>
 
-        <p> Datos : <?php $data->muestra( $data->datos ); ?> </p> <br>
-        <?php
-            if(isset($_POST['sortvalue'])){
-                echo "<p> Datos Ordenados  : </p> ";
-                $data->muestra( $data->sorted );
-                echo "<br> <br> ";
-            }
-        ?>
+        <p> <?php $data->muestra( $data->datos ); ?> </p> <br> <!-- Muestra el arreglo de los datos -->
 
-        <strong>Media:</strong> 
-        <p> <?php echo $data->media; ?> </p>
+        <p> <?php $data->medVar(); ?> </p> <!-- Muestra la Media y Varianza -->
 
-        <strong>Varianza:</strong> 
-        <p> <?php echo $data->varianza; ?> </p> <br>
-
-        <strong>Cantidad de Valores:</strong> <br> <br>
+        <br> <strong>Cantidad de Valores:</strong> <br> <br> 
 
         <p> <?php
-            // Show the Quantity of the elements in the array
+            // Muestra la cantidad de cada elemento del arreglo
+            $countArray = $data->cuenta( $data->datos,$max );
 
-            $arrayAux   = array( $data->max );
-            $countArray = $data->cuenta( $data->datos );
-
-
-            for($i=0; $i<=$data->max; $i++){
+            for($i=0; $i<=$max; $i++){
                 echo $i;
                 echo " --> [".$countArray[$i]."] . ";
 
                 if( $i>0 && $i%10 == 0){
                     echo "<br> <br>";
-                }
-                
+                } 
             }
         ?> </p>
     </div>

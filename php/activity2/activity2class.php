@@ -4,76 +4,57 @@ class Datos{
 
     // Attributes
     public $n;
-    public $max;
     public $datos  = array();
-    public $sorted = array();
-
-    public $media;
-    public $varianza;
 
     // CONSTRUCTOR
     public function __construct($size){
         $this->n      = $size;
         $this->datos  = array($size);
 
-        $this->max     = 0;
-        $this->media   = 0;
-        $this->varianza = 0;
+        for( $i=0; $i < $this->n; $i++){ // Fill Array
+            $this->datos[$i] = rand(1,50);
+        }
     }
 
     // ------- MAIN Methods
 
-    public function ordena(){
+    public function ordena($max){
 
         // Implementing Count Algorithm
-        $aux   = $this->cuenta($this->datos);
+        $aux   = $this->cuenta($this->datos, $max);
         $final = array(); // Create Final array that contains Final index positions
 
         for($i = 0; $i<$this->n; $i++){
             $final[$i] = 0;
         }
 
-
-        // echo "<br> <br> <br>";
-        // print_r($aux);
-        // echo "<br> <br> <br>";
-
         // Initiate SUM process
-        for($i = 1; $i<=$this->max; $i++){
+        for($i = 2; $i<=$max; $i++){
             $aux[$i] = $aux[$i] + $aux[ ($i-1) ];
         }
 
         // Set final indexing positions
-
-        // print_r($aux);
-        // echo "<br> <br> <br> <br>";
-        
         for($i=0; $i<$this->n; $i++){
 
-            $final[ $aux[ ($this->datos[$i]) ] ] = $this->datos[$i];
-            $aux[ $this->datos[$i]] --;
+            $final[ $aux[ ($this->datos[$i]) ]-1 ] = $this->datos[$i];
+            $aux[ $this->datos[$i]]--;
         }
-
-        // for($i=0;$i<$this->n;$i++){
-
-        // }
-
-        $this->sorted = $final;
+        
+        $this->datos = $final;
     }
 
-    public function cuenta($array){
-
-        //print_r($array);
+    public function cuenta($array, $max){
 
         $aux = array(); // Create the counting array.
 
-        for($i=0;$i<=$this->max; $i++){
+        for($i=0;$i<=$max; $i++){
             $aux[$i] = 0;
         }
 
         // Count the array elements
         for($i=0; $i<$this->n; $i++){
             $aux[ $array[$i] ]++; // Increase the Count value for each array[i] element 
+
         }
 
         return $aux;
@@ -81,16 +62,18 @@ class Datos{
 
     public function medVar(){
 
-        $this->media    = array_sum($this->datos) / $this->n;
-        $auxVarianza = 0.0;
+        $Media    = array_sum($this->datos) / $this->n;
+        $Varianza = 0.0;
 
         foreach( $this->datos as $valor ){
-            $auxVarianza += pow($valor-$this->media, 2);
+            $Varianza += pow($valor-$Media, 2);
         }
 
-        $auxVarianza /= $this->n;
+        $Varianza /= $this->n;
 
-        $this->varianza = $auxVarianza;
+        echo "<strong>La Media es: </strong>".$Media;
+        echo "<br> <br> <strong>La Varianza es: </strong>".$Varianza;
+
     }
 
     public function muestra($array){
@@ -100,35 +83,6 @@ class Datos{
         }
     }
 
-    // ------- Methods
-
-    public function fillArray(){
-
-        $i = 0;
-
-        for( $i=0; $i < $this->n; $i++){
-            $this->datos[$i] = rand(1,50);
-            $this->sorted[$i] = 0;
-        }
-
-        $this->max = $this->higher($this->datos);
-    }
-
-    public function higher($array){
-
-        $i = 0; $max = 0;
-
-        for( $i=0; $i < $this->n; $i++){
-
-            if($array[$i] > $max){
-                $max = $array[$i];
-            }
-        }
-
-        return $max;
-    }
-
 
 } // -----> END 'Datos' Class
-
 ?>
