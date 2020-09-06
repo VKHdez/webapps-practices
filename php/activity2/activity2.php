@@ -32,8 +32,6 @@
                 $data->ordena($max);
             }
 
-            // $data->medVar();
-
         }else{
             echo "<div class='alert'>N no es tamaño válido</div>";   
         } 
